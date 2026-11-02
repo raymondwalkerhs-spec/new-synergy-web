@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Signing in…</title>
+    <script>
+      (function () {
+        var search = location.search || "";
+        var hash = location.hash || "";
+        var params = new URLSearchParams(search.charAt(0) === "?" ? search.slice(1) : search);
+        var hashQuery = hash.indexOf("?") >= 0 ? hash.slice(hash.indexOf("?") + 1) : "";
+        // Also accept legacy hash routes like #/oauth-pending?code=...
+        if (!hashQuery && hash.indexOf("oauth-pending") >= 0 && hash.indexOf("?") >= 0) {
+          hashQuery = hash.slice(hash.indexOf("?") + 1);
+        }
+        if (hashQuery) {
+          new URLSearchParams(hashQuery).forEach(function (value, key) {
+            if (!params.get(key)) params.set(key, value);
+          });
+        }
+        var q = params.toString();
+        var base = location.pathname.replace(/\/oauth\.html$/i, "/");
+        // BrowserRouter (not HashRouter): keep code in the real query string so
+        // <Navigate to="/login"> cannot wipe a hash-only OAuth code.
+        location.replace(base + "oauth-pending" + (q ? "?" + q : ""));
+      })();
+    </script>
+  </head>
+  <body>Signing you in…</body>
+</html>
