@@ -1,0 +1,9 @@
+{
+  "name": "New Synergy",
+  "short_name": "New Synergy",
+  "start_url": "./attend",
+  "display": "standalone",
+  "background_color": "#0B1020",
+  "theme_color": "#0D9488",
+  "description": "New Synergy staff portal — add to Home Screen for phone check-in."
+}
